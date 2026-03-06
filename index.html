@@ -54,7 +54,7 @@ body{background:#110c14;color:white;font-family:'Poppins',sans-serif;overflow-x:
 .dot.err{background:#f87171;}
 .dot.busy{background:#fbbf24;animation:blink .4s infinite;}
 </style>
-</head>
+<script id="photo-restore">(function(){var G={"0":"photos/gallery_0_WhatsApp_Image_2026-02-28_at_19.28.03.jpeg","1":"photos/gallery_1_WhatsApp_Image_2026-02-28_at_19.32.49.jpeg","2":"photos/gallery_2_WhatsApp_Image_2026-02-28_at_19.28.04__1_.jpeg","3":"photos/gallery_3_WhatsApp_Image_2026-02-28_at_19.27.59.jpeg","4":"photos/gallery_4_WhatsApp_Image_2026-02-28_at_19.28.00.jpeg","5":"photos/gallery_5_WhatsApp_Image_2026-02-28_at_19.28.01.jpeg","6":"photos/gallery_6_WhatsApp_Image_2026-02-28_at_19.28.02.jpeg","7":"photos/gallery_7_WhatsApp_Image_2026-02-28_at_19.28.01__1_.jpeg","8":"photos/gallery_8_WhatsApp_Image_2026-02-28_at_19.28.05.jpeg"};var T={"0":"photos/timeline_0_WhatsApp_Image_2026-02-28_at_20.40.21.jpeg","1":"photos/timeline_1_WhatsApp_Image_2026-02-28_at_20.40.42.jpeg"};var M={"0":"photos/memory_0_WhatsApp_Image_2026-02-28_at_19.32.50.jpeg","1":"photos/memory_1_WhatsApp_Image_2026-02-28_at_19.32.50__1_.jpeg","2":"photos/memory_2_WhatsApp_Image_2026-02-28_at_19.28.04.jpeg","3":"photos/memory_3_WhatsApp_Image_2026-02-28_at_19.28.03__1_.jpeg","4":"photos/memory_4_WhatsApp_Image_2026-02-28_at_19.28.02__1_.jpeg"};var tlAsps=["4/3","1/1"];function fill(id,src,style){var e=document.getElementById(id);if(e){e.innerHTML="<img src='"+src+"' style='"+style+"'/>"; }}window.addEventListener("DOMContentLoaded",function(){  Object.keys(G).forEach(function(i){fill("gb"+i,G[i],"width:100%;height:100%;object-fit:cover;");});  Object.keys(T).forEach(function(i){var e=document.getElementById("tb"+i);if(e){e.outerHTML="<img src='"+T[i]+"' style='width:100%;border-radius:10px;margin-top:4px;display:block;aspect-ratio:"+tlAsps[i]+";object-fit:cover;'/>";}});  Object.keys(M).forEach(function(i){fill("mb"+i,M[i],"width:100%;height:100%;object-fit:cover;");});});})();</script></head>
 <body>
 <div id="starsbg" style="position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;"></div>
 
@@ -670,31 +670,6 @@ async function updateSiteHtml(token, user, repo, uploadedPaths){
     }
   });
 
-  var injectScript = '<script id="photo-restore">'
-    + '(function(){'
-    + 'var G='+JSON.stringify(galleryMap)+';'
-    + 'var T='+JSON.stringify(timelineMap)+';'
-    + 'var M='+JSON.stringify(memoryMap)+';'
-    + 'var tlAsps=["4/3","1/1"];'
-    + 'function fill(id,src,style){var e=document.getElementById(id);if(e){e.innerHTML="<img src=\'"+src+"\' style=\'"+style+"\'/>"; }}'
-    + 'window.addEventListener("DOMContentLoaded",function(){'
-    + '  Object.keys(G).forEach(function(i){fill("gb"+i,G[i],"width:100%;height:100%;object-fit:cover;");});'
-    + '  Object.keys(T).forEach(function(i){var e=document.getElementById("tb"+i);if(e){e.outerHTML="<img src=\'"+T[i]+"\' style=\'width:100%;border-radius:10px;margin-top:4px;display:block;aspect-ratio:"+tlAsps[i]+";object-fit:cover;\'/>";}});'
-    + '  Object.keys(M).forEach(function(i){fill("mb"+i,M[i],"width:100%;height:100%;object-fit:cover;");});'
-    + '});'
-    + '})();'
-    + '<\/script>';
-
-  // Remove any previous inject
-  html = html.replace(/<script id="photo-restore">[\s\S]*?<\/script>/g, '');
-  // Inject before </head>
-  html = html.replace('</head>', injectScript + '</head>');
-
-  // Encode back to base64 safely (handles unicode)
-  var encoded = btoa(String.fromCharCode.apply(null, new TextEncoder().encode(html)));
-
-  await ghPut(token, user, repo, 'index.html', encoded, 'Update site with photos', sha);
-}
-</script>
+  var injectScript = '
 </body>
 </html>
