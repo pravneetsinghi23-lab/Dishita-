@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Happy Birthday Dishita 💖</title>
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:#110c14;color:white;font-family:'Poppins',sans-serif;overflow-x:hidden;}
+::selection{background:#ff69b4;color:white;}
+::-webkit-scrollbar{width:8px;}::-webkit-scrollbar-track{background:#110c14;}::-webkit-scrollbar-thumb{background:#ff69b4;border-radius:4px;}
+.cur{font-family:'Dancing Script',cursive;}
+@keyframes hpulse{0%,100%{transform:scale(1);opacity:.8;}50%{transform:scale(1.15);opacity:1;filter:drop-shadow(0 0 12px rgba(255,105,180,.7));}}
+@keyframes flicker{0%{transform:scale(1) rotate(-2deg);}100%{transform:scale(1.1) rotate(2deg);}}
+@keyframes fadeIn{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
+@keyframes floating{0%,100%{transform:translateY(0);}50%{transform:translateY(-12px);}}
+@keyframes blink{0%,100%{opacity:1;}50%{opacity:.4;}}
+@keyframes twinkle{0%,100%{opacity:.1;}50%{opacity:.9;}}
+@keyframes slideUp{from{opacity:0;transform:scale(.97);}to{opacity:1;transform:scale(1);}}
+@keyframes spin{from{transform:rotate(0deg);}to{transform:rotate(360deg);}}
+.hpulse{animation:hpulse 1.5s infinite ease-in-out;}
+.flame{animation:flicker .5s infinite alternate;transform-origin:bottom center;}
+.fadein{animation:fadeIn 1.5s ease-out forwards;}
+.floatanim{animation:floating 3s ease-in-out infinite;}
+.blink{animation:blink 2s infinite;}
+.polaroid{background:white;padding:10px 10px 28px;box-shadow:0 10px 25px rgba(0,0,0,.45);border-radius:3px;transition:transform .3s;}
+.polaroid:hover{transform:scale(1.07) rotate(0deg)!important;z-index:10;position:relative;}
+.tcard{background:#1a1221;border:1px solid rgba(236,72,153,.2);border-radius:14px;padding:1.4rem 1.6rem;margin-left:28px;margin-bottom:2.8rem;transition:border-color .3s;}
+.tcard:hover{border-color:rgba(236,72,153,.55);}
+.pbtn{background:#ec4899;color:white;border:none;padding:11px 30px;border-radius:50px;font-family:'Poppins',sans-serif;font-size:.95rem;font-weight:500;cursor:pointer;transition:all .2s;box-shadow:0 4px 18px rgba(236,72,153,.35);}
+.pbtn:hover{background:#db2777;transform:translateY(-1px);}
+.pbtn:disabled{background:#555;cursor:not-allowed;transform:none;box-shadow:none;}
+.statpill{background:rgba(131,24,67,.35);padding:10px 18px;border-radius:10px;min-width:85px;text-align:center;}
+.uslot{border:2px dashed rgba(236,72,153,.4);border-radius:10px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.4rem;color:#f472b6;font-size:.85rem;cursor:pointer;transition:border-color .2s;}
+.uslot:hover{border-color:rgba(236,72,153,.8);}
+/* Letter modal */
+#modalbg{display:none;position:fixed;inset:0;background:rgba(0,0,0,.82);z-index:999;align-items:center;justify-content:center;padding:1rem;backdrop-filter:blur(8px);}
+#modalbg.open{display:flex;animation:fadeIn .3s ease forwards;}
+#modalinner{background:#fff9f0;max-width:660px;width:100%;max-height:88vh;overflow-y:auto;border-radius:18px;padding:2.5rem 2.8rem;position:relative;color:#333;animation:slideUp .35s ease forwards;}
+/* Upload modal */
+#ghbg{display:none;position:fixed;inset:0;background:rgba(0,0,0,.9);z-index:1000;align-items:center;justify-content:center;padding:1rem;backdrop-filter:blur(10px);}
+#ghbg.open{display:flex;}
+#ghbox{background:#1a1221;border:1px solid rgba(236,72,153,.4);max-width:520px;width:100%;border-radius:20px;padding:2rem 2.2rem;position:relative;max-height:90vh;overflow-y:auto;}
+.ghinput{background:#110c14;border:1px solid rgba(236,72,153,.3);color:white;padding:10px 14px;border-radius:10px;width:100%;font-family:'Poppins',sans-serif;font-size:.88rem;outline:none;}
+.ghinput:focus{border-color:#ec4899;}
+.ghinput::placeholder{color:#555;}
+.pbar{background:rgba(236,72,153,.15);border-radius:50px;height:10px;overflow:hidden;margin:1rem 0;}
+.pfill{background:linear-gradient(90deg,#ec4899,#f472b6);height:100%;border-radius:50px;transition:width .4s;}
+.urow{display:flex;align-items:center;gap:.6rem;padding:.5rem 0;border-bottom:1px solid rgba(255,255,255,.05);}
+.thumb{width:44px;height:44px;object-fit:cover;border-radius:7px;flex-shrink:0;}
+.dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;background:#444;}
+.dot.ok{background:#34d399;}
+.dot.err{background:#f87171;}
+.dot.busy{background:#fbbf24;animation:blink .4s infinite;}
+</style>
+</head>
+<body>
+<div id="starsbg" style="position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;"></div>
+
+<div id="overlay" style="display:none;position:fixed;inset:0;background:#110c14;z-index:200;flex-direction:column;align-items:center;justify-content:center;">
+  <svg width="64" height="64" viewBox="0 0 24 24" fill="#ec4899" class="hpulse" style="margin-bottom:1.5rem;"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+  <h2 class="cur" style="font-size:2rem;color:#f9a8d4;">Loading Love for Dishita...</h2>
+</div>
+
+<!-- INTRO -->
+<div id="intro" style="min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:2rem 1.5rem;position:relative;z-index:1;">
+  <div class="fadein" style="text-align:center;margin-bottom:2.5rem;">
+    <h1 class="cur" style="font-size:clamp(2.6rem,8vw,5.5rem);color:#f472b6;line-height:1.25;filter:drop-shadow(0 0 16px rgba(255,105,180,.45));margin-bottom:1.5rem;">Happiiesttt Birthdayy,<br/>Dishita</h1>
+    <svg width="48" height="48" viewBox="0 0 24 24" fill="#ec4899" class="hpulse" style="display:block;margin:0 auto;"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+  </div>
+  <div class="fadein" style="animation-delay:.5s;display:flex;flex-direction:column;align-items:center;">
+    <p id="hint" style="color:#d1d5db;margin-bottom:3.5rem;font-size:1.05rem;text-align:center;">Tap each candle to make a wish ✨</p>
+    <div style="position:relative;display:inline-block;" id="cakewrap">
+      <div id="candlerow" style="display:flex;justify-content:center;gap:1rem;position:absolute;top:-72px;left:0;right:0;z-index:10;"></div>
+      <svg id="cakesvg" width="240" height="140" viewBox="0 0 240 140" style="filter:drop-shadow(0 10px 30px rgba(236,72,153,.35));cursor:default;">
+        <ellipse cx="120" cy="130" rx="110" ry="10" fill="#2d1b2e"/>
+        <g id="whole">
+          <path d="M 30 70 L 210 70 L 210 120 C 210 125.5 169.7 130 120 130 C 70.3 130 30 125.5 30 120 Z" fill="#ff9ebd"/>
+          <path d="M 30 95 C 70 98 170 98 210 95" stroke="#e07a9c" stroke-width="4" fill="none" stroke-dasharray="10,5"/>
+          <path d="M 25 70 C 25 60 215 60 215 70 C 215 75 200 85 190 75 C 180 85 165 75 155 85 C 145 75 130 85 120 75 C 110 85 95 75 85 85 C 75 75 60 85 50 75 C 40 85 25 75 25 70 Z" fill="#fff"/>
+          <rect x="60" y="55" width="4" height="8" rx="2" fill="#ff6b6b" transform="rotate(25 60 55)"/>
+          <rect x="100" y="50" width="4" height="8" rx="2" fill="#4ecdc4" transform="rotate(-15 100 50)"/>
+          <rect x="150" y="58" width="4" height="8" rx="2" fill="#ffe66d" transform="rotate(45 150 58)"/>
+          <rect x="180" y="52" width="4" height="8" rx="2" fill="#a8e6cf" transform="rotate(-30 180 52)"/>
+        </g>
+        <g id="bitten" style="display:none;">
+          <path d="M 30 70 L 150 70 C 150 80 160 85 170 85 C 180 85 185 95 180 105 C 175 115 185 120 195 120 L 210 120 C 210 125.5 169.7 130 120 130 C 70.3 130 30 125.5 30 120 Z" fill="#ff9ebd"/>
+          <path d="M 25 70 C 25 60 160 60 160 70 C 160 75 155 80 150 75 C 140 85 125 75 115 85 C 105 75 90 85 80 75 C 70 85 55 75 45 75 C 35 85 25 75 25 70 Z" fill="#fff"/>
+        </g>
+      </svg>
+    </div>
+    <p id="bitehint" class="blink" style="color:#f9a8d4;margin-top:1.8rem;font-size:.9rem;display:none;">🎉 All wishes made! Tap the cake!</p>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div id="main" style="display:none;max-width:880px;margin:0 auto;padding:4.5rem 1.5rem 7rem;position:relative;z-index:1;">
+  <div style="text-align:center;margin-bottom:5rem;">
+    <h1 class="cur" style="font-size:clamp(2.5rem,7vw,4rem);color:#f472b6;margin-bottom:1rem;">Happy Birthday, Dishita!</h1>
+    <div style="display:flex;justify-content:center;gap:.5rem;font-size:1.2rem;">⭐ ❤️ ⭐</div>
+  </div>
+
+  <!-- Gallery -->
+  <div style="margin-bottom:6rem;">
+    <div style="display:flex;align-items:center;justify-content:center;gap:.75rem;margin-bottom:.5rem;">
+      <h2 class="cur" style="font-size:clamp(1.8rem,5vw,2.8rem);color:#f9a8d4;">Our Best Moments</h2>📸
+    </div>
+    <p style="text-align:center;color:#888;font-size:.8rem;margin-bottom:2rem;">Click any photo slot to add your picture</p>
+    <div id="gallery" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:2rem;padding:0 .5rem;"></div>
+  </div>
+
+  <!-- Letter -->
+  <div style="margin-bottom:6rem;display:flex;flex-direction:column;align-items:center;">
+    <div style="display:flex;align-items:center;gap:.75rem;margin-bottom:2rem;">
+      <h2 class="cur" style="font-size:clamp(1.8rem,5vw,2.8rem);color:#f9a8d4;">A Letter For You</h2>
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="#f472b6"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+    </div>
+    <div onclick="document.getElementById('modalbg').classList.add('open')" style="cursor:pointer;transition:transform .3s;" onmouseover="this.style.transform='scale(1.06)'" onmouseout="this.style.transform='scale(1)'">
+      <div style="width:192px;height:128px;background:#ec4899;border-radius:12px;box-shadow:0 10px 30px rgba(236,72,153,.45);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;">
+        <div style="position:absolute;top:0;left:0;right:0;height:0;border-left:96px solid transparent;border-right:96px solid transparent;border-top:64px solid #db2777;z-index:2;"></div>
+        <div style="position:absolute;top:0;left:0;right:0;height:0;border-left:96px solid #f472b6;border-right:96px solid #f472b6;border-bottom:128px solid transparent;"></div>
+        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" style="position:relative;z-index:3;"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        <span style="position:absolute;bottom:-4px;right:8px;font-size:2rem;z-index:4;">💌</span>
+      </div>
+      <p class="blink" style="text-align:center;margin-top:.75rem;color:#f9a8d4;font-weight:500;">Click to open!</p>
+    </div>
+  </div>
+
+  <!-- Timeline -->
+  <div style="margin-bottom:6rem;">
+    <div style="display:flex;align-items:center;justify-content:center;gap:.75rem;margin-bottom:3rem;">
+      <h2 class="cur" style="font-size:clamp(1.8rem,5vw,2.8rem);color:#f9a8d4;">Our Friendship Journey</h2>✨
+    </div>
+    <div id="timeline" style="position:relative;border-left:2px solid rgba(236,72,153,.3);margin-left:8px;"></div>
+  </div>
+
+  <!-- Memories -->
+  <div style="margin-bottom:6rem;">
+    <div style="display:flex;align-items:center;justify-content:center;gap:.75rem;margin-bottom:.5rem;">
+      <h2 class="cur" style="font-size:clamp(1.8rem,5vw,2.8rem);color:#f9a8d4;">Happy Memories 🎞️</h2>
+    </div>
+    <p style="text-align:center;color:#888;font-size:.8rem;margin-bottom:2rem;">Click each frame to add your favourite memories</p>
+    <div id="memories" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:1.5rem;padding:0 .5rem;"></div>
+  </div>
+
+  <!-- Footer -->
+  <div style="text-align:center;border-top:1px solid rgba(236,72,153,.2);padding-top:4rem;">
+    <h2 class="cur" style="font-size:clamp(2.5rem,7vw,4rem);color:#f472b6;margin-bottom:.5rem;">Love You!</h2>
+    <p style="font-size:1.2rem;color:#d1d5db;margin-bottom:2.5rem;">Happy Birthday, Dishita 💖</p>
+    <div style="display:inline-block;background:#1a1221;padding:2rem 3rem;border-radius:20px;border:1px solid rgba(236,72,153,.2);margin-bottom:2.5rem;">
+      <p style="color:#f9a8d4;font-size:.75rem;text-transform:uppercase;letter-spacing:.2em;font-weight:600;margin-bottom:1rem;">Besties Since Always</p>
+      <div style="display:flex;gap:1rem;justify-content:center;">
+        <div class="statpill"><span id="dv" style="display:block;font-size:2rem;font-weight:700;color:#f472b6;">0</span><span style="font-size:.75rem;color:#9ca3af;">Days</span></div>
+        <div class="statpill"><span id="hv" style="display:block;font-size:2rem;font-weight:700;color:#f472b6;">0</span><span style="font-size:.75rem;color:#9ca3af;">Hours</span></div>
+        <div class="statpill"><span id="mv" style="display:block;font-size:2rem;font-weight:700;color:#f472b6;">0</span><span style="font-size:.75rem;color:#9ca3af;">Mins</span></div>
+      </div>
+    </div>
+    <div>
+      <button class="pbtn" id="uploadBtn" onclick="openUploadModal()" style="font-size:1rem;padding:14px 40px;">
+        📸 Upload Photos to Website
+      </button>
+      <p style="color:#888;font-size:.75rem;margin-top:.6rem;">Photos go straight to GitHub — live on the site!</p>
+    </div>
+  </div>
+</div>
+
+<!-- Letter Modal -->
+<div id="modalbg" onclick="if(event.target===this)this.classList.remove('open')">
+  <div id="modalinner">
+    <button onclick="document.getElementById('modalbg').classList.remove('open')" style="position:absolute;top:14px;right:14px;width:38px;height:38px;background:#fce7f3;border:none;border-radius:50%;font-size:1rem;color:#ec4899;cursor:pointer;">✕</button>
+    <h2 class="cur" style="font-size:clamp(1.8rem,5vw,3rem);color:#ec4899;margin-bottom:1.5rem;border-bottom:2px solid #fce7f3;padding-bottom:1rem;">My Dearest Dishita,</h2>
+    <div class="cur" style="font-size:clamp(1.1rem,2.5vw,1.35rem);line-height:1.9;color:#555;display:flex;flex-direction:column;gap:1.3rem;">
+      <p>Happy Birthday to my absolute favorite person here! 🎉</p>
+      <p>Your smile lights up any room you walk into, and your energy is so contagious. I feel incredibly lucky to have you in my life. Every moment with you is an adventure, even if we are just sitting and doing absolutely nothing.</p>
+      <p>You are not just awesome, my partner in crime, my safe space, and my biggest cheerleader. Thank you for always listening to my endless rants, for the spontaneous plans, and for simply being you. 🥺</p>
+      <p>I hope this year brings you all the happiness, success, and love that you deserve. Don't ever stop being the amazing, beautiful, and kind-hearted soul that you are. I promise to always be by your side, cheering for you, fighting for you, and celebrating you!</p>
+      <p>Enjoy your special day. We are going to celebrate exactly the way you want to! 🎂✨</p>
+      <div style="margin-top:1.5rem;text-align:right;">
+        <p style="color:#666;">With all my love,</p>
+        <p style="color:#ec4899;font-weight:700;font-size:1.8rem;margin-top:.4rem;">Pravneet 💖</p>
+      </div>
+    </div>
+    <div style="display:flex;justify-content:center;margin-top:2rem;">
+      <button class="pbtn" onclick="document.getElementById('modalbg').classList.remove('open')">Close Letter</button>
+    </div>
+  </div>
+</div>
+
+<!-- Upload Modal -->
+<div id="ghbg">
+  <div id="ghbox">
+
+    <!-- STEP 1: config -->
+    <div id="s1">
+      <h2 class="cur" style="color:#f472b6;font-size:1.8rem;margin-bottom:.3rem;">Upload Photos 📸</h2>
+      <p style="color:#888;font-size:.8rem;margin-bottom:1.4rem;">Photos upload directly to GitHub and appear on the live site.</p>
+
+      <div style="background:rgba(236,72,153,.07);border:1px solid rgba(236,72,153,.2);border-radius:12px;padding:1.1rem;margin-bottom:1.2rem;">
+        <p style="color:#f9a8d4;font-size:.8rem;font-weight:600;margin-bottom:.8rem;">🔑 GitHub Details</p>
+        <div style="display:flex;flex-direction:column;gap:.6rem;">
+          <div>
+            <label style="color:#aaa;font-size:.75rem;display:block;margin-bottom:.25rem;">Personal Access Token</label>
+            <input id="tok" class="ghinput" type="password" placeholder="github_pat_..."/>
+          </div>
+          <div style="display:flex;gap:.5rem;">
+            <div style="flex:1;">
+              <label style="color:#aaa;font-size:.75rem;display:block;margin-bottom:.25rem;">Username</label>
+              <input id="usr" class="ghinput" type="text" placeholder="visionvoy35-create"/>
+            </div>
+            <div style="flex:1;">
+              <label style="color:#aaa;font-size:.75rem;display:block;margin-bottom:.25rem;">Repository</label>
+              <input id="rep" class="ghinput" type="text" placeholder="Dishita-Birthday-20"/>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <p style="color:#f9a8d4;font-size:.8rem;font-weight:600;margin-bottom:.5rem;">Photos queued: <span id="qcount" style="color:white;">0</span></p>
+      <div id="qlist" style="max-height:180px;overflow-y:auto;background:rgba(0,0,0,.25);border-radius:10px;padding:.4rem .7rem;margin-bottom:1.2rem;">
+        <p id="qempty" style="color:#555;font-size:.8rem;text-align:center;padding:.8rem 0;">No photos selected yet.</p>
+      </div>
+
+      <div style="display:flex;gap:.7rem;">
+        <button class="pbtn" onclick="closeUploadModal()" style="background:rgba(255,255,255,.08);box-shadow:none;flex:1;">Cancel</button>
+        <button class="pbtn" id="gobtn" onclick="doUpload()" style="flex:2;">🚀 Upload Now</button>
+      </div>
+    </div>
+
+    <!-- STEP 2: progress -->
+    <div id="s2" style="display:none;">
+      <h2 class="cur" style="color:#f472b6;font-size:1.8rem;margin-bottom:.3rem;">Uploading... ✨</h2>
+      <p style="color:#888;font-size:.8rem;margin-bottom:.5rem;" id="progtext">Starting...</p>
+      <div class="pbar"><div class="pfill" id="pfill" style="width:0%;"></div></div>
+      <div id="rowlist" style="max-height:280px;overflow-y:auto;margin-top:.5rem;"></div>
+    </div>
+
+    <!-- STEP 3: done -->
+    <div id="s3" style="display:none;text-align:center;padding:1rem 0;">
+      <div style="font-size:3rem;margin-bottom:.8rem;" id="doneicon">🎉</div>
+      <h2 class="cur" id="donetitle" style="font-size:1.9rem;color:#34d399;margin-bottom:.4rem;">All Done!</h2>
+      <p id="donemsg" style="color:#aaa;font-size:.85rem;margin-bottom:1.5rem;">Photos are live! Give GitHub ~1 min to refresh.</p>
+      <a id="sitelink" href="#" target="_blank" class="pbtn" style="display:inline-block;text-decoration:none;margin-bottom:.8rem;">🌐 Open Live Site</a><br/>
+      <button class="pbtn" onclick="closeUploadModal()" style="margin-top:.6rem;background:rgba(255,255,255,.1);box-shadow:none;">Close</button>
+    </div>
+
+  </div>
+</div>
+
+<script>
+// ========== PHOTO QUEUE ==========
+// Simple array of {label, filename, b64pure} — no innerHTML with base64 ever
+var queue = [];
+
+function queuePhoto(label, filename, dataUrl) {
+  // Remove duplicate for same filename
+  queue = queue.filter(function(x){ return x.filename !== filename; });
+  // Strip data URL prefix, keep only base64 part
+  var b64 = dataUrl.indexOf(',') >= 0 ? dataUrl.split(',')[1] : dataUrl;
+  queue.push({ label: label, filename: filename, b64: b64, dataUrl: dataUrl });
+  refreshQueueUI();
+}
+
+function refreshQueueUI() {
+  var countEl = document.getElementById('qcount');
+  var listEl  = document.getElementById('qlist');
+  var emptyEl = document.getElementById('qempty');
+  if(countEl) countEl.textContent = queue.length;
+  if(!listEl) return;
+  // Remove old rows (keep qempty element)
+  var rows = listEl.querySelectorAll('.urow');
+  rows.forEach(function(r){ r.parentNode.removeChild(r); });
+  if(queue.length === 0) {
+    if(emptyEl) emptyEl.style.display = 'block';
+    return;
+  }
+  if(emptyEl) emptyEl.style.display = 'none';
+  queue.forEach(function(item) {
+    var row = document.createElement('div');
+    row.className = 'urow';
+    var img = document.createElement('img');
+    img.className = 'thumb';
+    img.src = item.dataUrl;
+    var info = document.createElement('div');
+    info.style.cssText = 'flex:1;min-width:0;';
+    var lbl = document.createElement('p');
+    lbl.style.cssText = 'font-size:.8rem;color:#f9a8d4;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;';
+    lbl.textContent = item.label;
+    var fn = document.createElement('p');
+    fn.style.cssText = 'font-size:.7rem;color:#666;';
+    fn.textContent = 'photos/' + item.filename;
+    info.appendChild(lbl);
+    info.appendChild(fn);
+    row.appendChild(img);
+    row.appendChild(info);
+    listEl.appendChild(row);
+  });
+}
+
+// ========== STARS ==========
+(function(){
+  var sb = document.getElementById('starsbg');
+  for(var i = 0; i < 65; i++){
+    var s = document.createElement('div');
+    var sz = Math.random()*2.5+0.8;
+    s.style.cssText = 'position:absolute;border-radius:50%;background:white;'
+      +'top:'+Math.random()*100+'%;left:'+Math.random()*100+'%;'
+      +'width:'+sz+'px;height:'+sz+'px;'
+      +'animation:twinkle '+(Math.random()*4+2)+'s '+(Math.random()*5)+'s infinite;';
+    sb.appendChild(s);
+  }
+})();
+
+// ========== CANDLES ==========
+var candleStates = [false,false,false,false,false];
+var cr = document.getElementById('candlerow');
+for(var ci = 0; ci < 5; ci++){
+  (function(i){
+    var c = document.createElement('div');
+    c.style.cssText = 'display:flex;flex-direction:column;align-items:center;cursor:pointer;padding:6px;transition:transform .1s;';
+    c.onmouseover = function(){ this.style.transform='scale(1.15)'; };
+    c.onmouseout  = function(){ this.style.transform='scale(1)'; };
+    c.innerHTML = '<div id="fl'+i+'" class="flame" style="width:12px;height:20px;background:linear-gradient(to top,#fbbf24,#f97316);border-radius:50% 50% 40% 40%;margin-bottom:3px;box-shadow:0 0 10px #fbbf24;transition:all .3s;"></div>'
+      +'<div style="width:12px;height:52px;background:linear-gradient(to bottom,white,#fce7f3);border-radius:4px 4px 0 0;overflow:hidden;position:relative;"><div style="position:absolute;inset:0;opacity:.3;background:repeating-linear-gradient(45deg,transparent,transparent 5px,#ff69b4 5px,#ff69b4 10px);"></div></div>';
+    c.onclick = function(e){
+      e.stopPropagation();
+      if(candleStates[i]) return;
+      candleStates[i] = true;
+      var fl = document.getElementById('fl'+i);
+      fl.style.opacity='0'; fl.style.transform='scale(0)'; fl.classList.remove('flame');
+      if(candleStates.every(function(v){ return v; })){
+        document.getElementById('hint').textContent = 'Yay! Now tap the cake to take a bite! 🍰';
+        document.getElementById('bitehint').style.display = 'block';
+        document.getElementById('cakewrap').classList.add('floatanim');
+        document.getElementById('cakesvg').style.cursor = 'pointer';
+      }
+    };
+    cr.appendChild(c);
+  })(ci);
+}
+
+document.getElementById('cakesvg').onclick = function(){
+  if(!candleStates.every(function(v){ return v; })) return;
+  document.getElementById('whole').style.display = 'none';
+  document.getElementById('bitten').style.display = 'block';
+  var ov = document.getElementById('overlay');
+  ov.style.display = 'flex';
+  setTimeout(function(){
+    document.getElementById('intro').style.display = 'none';
+    ov.style.display = 'none';
+    var m = document.getElementById('main');
+    m.style.display = 'block';
+    m.classList.add('fadein');
+    window.scrollTo({top:0});
+    startTimer();
+  }, 2000);
+};
+
+// ========== TIMER ==========
+function startTimer(){
+  var START = new Date('2023-08-17T00:00:00');
+  function calc(){
+    var d = new Date() - START;
+    document.getElementById('dv').textContent = Math.floor(d/864e5);
+    document.getElementById('hv').textContent = Math.floor((d/36e5)%24);
+    document.getElementById('mv').textContent = Math.floor((d/6e4)%60);
+  }
+  calc(); setInterval(calc, 60000);
+}
+
+// ========== READ FILE ==========
+function readFile(file, cb){
+  var r = new FileReader();
+  r.onload = function(e){ cb(e.target.result); };
+  r.readAsDataURL(file);
+}
+
+// ========== GALLERY ==========
+var galSlots = [
+  {t:"The iconic duo 👯‍♀️",r:"-4deg"},
+  {t:"Birthday vibes 🎂",r:"3deg"},
+  {t:"Looking cute ✨",r:"-3deg"},
+  {t:"Festival feels 🌸",r:"5deg"},
+  {t:"Triplieee 🤝",r:"-5deg"},
+  {t:"Dishitayein 🌙",r:"2deg"},
+  {t:"Shopping chaos 🛍️",r:"-2deg"},
+  {t:"Mirror selfie 🪞",r:"4deg"},
+  {t:"Forever & Always 💖",r:"-3deg"}
+];
+var galEl = document.getElementById('gallery');
+galSlots.forEach(function(slot, i){
+  var label = document.createElement('label');
+  label.style.cursor = 'pointer';
+  var inp = document.createElement('input');
+  inp.type='file'; inp.accept='image/*'; inp.style.display='none';
+  var pol = document.createElement('div');
+  pol.className = 'polaroid';
+  pol.style.transform = 'rotate('+slot.r+')';
+  var box = document.createElement('div');
+  box.id = 'gb'+i;
+  box.style.cssText = 'width:100%;aspect-ratio:1;background:linear-gradient(135deg,#fbcfe8,#e9d5ff);border-radius:2px;display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative;margin-bottom:.5rem;';
+  box.innerHTML = '<span style="font-size:1.5rem;">❤️</span><span style="position:absolute;bottom:6px;right:6px;font-size:1.1rem;">➕</span>';
+  var cap = document.createElement('p');
+  cap.className='cur'; cap.style.cssText='color:#374151;font-size:1rem;font-weight:700;text-align:center;';
+  cap.textContent = slot.t;
+  pol.appendChild(box); pol.appendChild(cap);
+  label.appendChild(inp); label.appendChild(pol);
+  inp.addEventListener('change', function(e){
+    var f = e.target.files[0]; if(!f) return;
+    readFile(f, function(url){
+      box.innerHTML = '<img src="'+url+'" style="width:100%;height:100%;object-fit:cover;"/>';
+      var fname = 'gallery_'+i+'_'+f.name.replace(/[^a-zA-Z0-9._-]/g,'_');
+      queuePhoto(slot.t, fname, url);
+    });
+  });
+  galEl.appendChild(label);
+});
+
+// ========== TIMELINE ==========
+var tlData = [
+  {title:"The First Face I Saw 🛗", text:"You were literally the first person I saw from our batch — in the lift of all places! hehe. Little did I know that random moment would turn into one of the best things to happen to me in college. 🥹", photo:false},
+  {title:"CCP Days 🎓", text:"Then came CCP, and suddenly we went from lift strangers to actual people in each other's lives. Those days were something else entirely.", photo:true, idx:0, asp:"4/3"},
+  {title:"Chiinii Log ☕", text:"And then we became Chiinii log — our little world, our little chaos. You just get it, and you get me, and that's everything.", photo:true, idx:1, asp:"1/1"},
+  {title:"The Only Constant 🌟", text:"Through every semester, every breakdown, every random 2am plan — you've been the one constant I could always count on. I'm so proud of the person you are becoming. 💪", photo:false},
+  {title:"Forever to Go 🥂", text:"Birthdays will come and go, but you're stuck with me for life. Cheers to making countless more memories together! Here's to forever, Dishita. 🥂", photo:false}
+];
+var tlEl = document.getElementById('timeline');
+tlData.forEach(function(item){
+  var wrap = document.createElement('div');
+  wrap.style.position = 'relative';
+  var dot = document.createElement('div');
+  dot.style.cssText = 'position:absolute;width:16px;height:16px;background:#ec4899;border-radius:50%;left:-9px;top:8px;box-shadow:0 0 10px #ff69b4;';
+  var card = document.createElement('div');
+  card.className = 'tcard';
+  var h3 = document.createElement('h3');
+  h3.className='cur'; h3.style.cssText='font-size:1.6rem;color:#f472b6;margin-bottom:.4rem;';
+  h3.textContent = item.title;
+  var p = document.createElement('p');
+  p.style.cssText='color:#d1d5db;line-height:1.75;font-size:.93rem;';
+  p.textContent = item.text;
+  card.appendChild(h3); card.appendChild(p);
+  if(item.photo){
+    (function(idx, asp, title){
+      var lbl = document.createElement('label');
+      lbl.style.cssText='display:block;margin-top:1rem;cursor:pointer;';
+      var inp2 = document.createElement('input');
+      inp2.type='file'; inp2.accept='image/*'; inp2.style.display='none';
+      var slot = document.createElement('div');
+      slot.id = 'tb'+idx;
+      slot.className = 'uslot';
+      slot.style.cssText = 'aspect-ratio:'+asp+';padding:1rem;';
+      slot.innerHTML = '<span style="font-size:1.5rem;">📷</span><span>Click to add a photo</span>';
+      inp2.addEventListener('change', function(e){
+        var f = e.target.files[0]; if(!f) return;
+        readFile(f, function(url){
+          slot.outerHTML = '<img src="'+url+'" style="width:100%;border-radius:10px;margin-top:4px;display:block;aspect-ratio:'+asp+';object-fit:cover;"/>';
+          var fname = 'timeline_'+idx+'_'+f.name.replace(/[^a-zA-Z0-9._-]/g,'_');
+          queuePhoto(title, fname, url);
+        });
+      });
+      lbl.appendChild(inp2); lbl.appendChild(slot);
+      card.appendChild(lbl);
+    })(item.idx, item.asp, item.title);
+  }
+  wrap.appendChild(dot); wrap.appendChild(card);
+  tlEl.appendChild(wrap);
+});
+
+// ========== MEMORIES ==========
+var rots = [-4,3,-2,5,-3];
+var memEl = document.getElementById('memories');
+for(var mi = 0; mi < 5; mi++){
+  (function(i){
+    var lbl = document.createElement('label');
+    lbl.style.cursor = 'pointer';
+    var inp = document.createElement('input');
+    inp.type='file'; inp.accept='image/*'; inp.style.display='none';
+    var pol = document.createElement('div');
+    pol.style.cssText = 'background:white;padding:8px 8px 28px;box-shadow:0 10px 25px rgba(0,0,0,.4);border-radius:3px;transform:rotate('+rots[i]+'deg);transition:transform .3s;';
+    pol.onmouseover = function(){ this.style.transform='scale(1.07) rotate(0deg)'; this.style.zIndex=10; };
+    pol.onmouseout  = function(){ this.style.transform='rotate('+rots[i]+'deg)'; this.style.zIndex=''; };
+    var box = document.createElement('div');
+    box.id = 'mb'+i;
+    box.style.cssText = 'width:100%;aspect-ratio:1;background:linear-gradient(135deg,#fce7f3,#ede9fe);border-radius:2px;display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative;';
+    box.innerHTML = '<span style="font-size:1.5rem;">❤️</span><span style="position:absolute;bottom:6px;right:6px;font-size:1.1rem;">➕</span>';
+    inp.addEventListener('change', function(e){
+      var f = e.target.files[0]; if(!f) return;
+      readFile(f, function(url){
+        box.innerHTML = '<img src="'+url+'" style="width:100%;height:100%;object-fit:cover;"/>';
+        var fname = 'memory_'+i+'_'+f.name.replace(/[^a-zA-Z0-9._-]/g,'_');
+        queuePhoto('Memory #'+(i+1), fname, url);
+      });
+    });
+    pol.appendChild(box);
+    lbl.appendChild(inp); lbl.appendChild(pol);
+    memEl.appendChild(lbl);
+  })(mi);
+}
+
+// ========== UPLOAD MODAL ==========
+function openUploadModal(){
+  refreshQueueUI();
+  document.getElementById('s1').style.display = 'block';
+  document.getElementById('s2').style.display = 'none';
+  document.getElementById('s3').style.display = 'none';
+  document.getElementById('ghbg').classList.add('open');
+}
+
+function closeUploadModal(){
+  document.getElementById('ghbg').classList.remove('open');
+}
+
+// ========== GITHUB UPLOAD ==========
+// Safe base64 encode for non-ASCII text
+function safeB64(str){
+  return btoa(unescape(encodeURIComponent(str)));
+}
+
+// Get SHA of existing file (returns null if not found)
+async function getSHA(token, user, repo, path){
+  try {
+    var r = await fetch('https://api.github.com/repos/'+user+'/'+repo+'/contents/'+path, {
+      headers:{ 'Authorization':'token '+token, 'Accept':'application/vnd.github+json' }
+    });
+    if(!r.ok) return null;
+    var j = await r.json();
+    return j.sha || null;
+  } catch(e){ return null; }
+}
+
+// Upload single file (raw base64 content, no data: prefix)
+async function ghPut(token, user, repo, path, b64content, message, sha){
+  var body = { message:message, content:b64content, branch:'main' };
+  if(sha) body.sha = sha;
+  var r = await fetch('https://api.github.com/repos/'+user+'/'+repo+'/contents/'+path, {
+    method:'PUT',
+    headers:{ 'Authorization':'token '+token, 'Content-Type':'application/json', 'Accept':'application/vnd.github+json' },
+    body: JSON.stringify(body)
+  });
+  var j = await r.json();
+  if(!r.ok) throw new Error(j.message || ('HTTP '+r.status));
+  return j;
+}
+
+async function doUpload(){
+  var token = document.getElementById('tok').value.trim();
+  var user  = document.getElementById('usr').value.trim();
+  var repo  = document.getElementById('rep').value.trim();
+
+  if(!token){ alert('Please enter your GitHub token!'); return; }
+  if(!user)  { alert('Please enter your GitHub username!'); return; }
+  if(!repo)  { alert('Please enter your repository name!'); return; }
+  if(queue.length === 0){ alert('No photos added yet! Please add photos first.'); return; }
+
+  // Show progress screen
+  document.getElementById('s1').style.display = 'none';
+  document.getElementById('s2').style.display = 'block';
+
+  var rowlistEl = document.getElementById('rowlist');
+  rowlistEl.innerHTML = '';
+
+  // Build rows
+  var dots = [];
+  var stats = [];
+  queue.forEach(function(item, i){
+    var row = document.createElement('div');
+    row.className = 'urow';
+    var img = document.createElement('img');
+    img.className = 'thumb'; img.src = item.dataUrl;
+    var info = document.createElement('div');
+    info.style.cssText = 'flex:1;min-width:0;';
+    var lbl = document.createElement('p');
+    lbl.style.cssText = 'font-size:.8rem;color:#f9a8d4;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;';
+    lbl.textContent = item.label;
+    var st = document.createElement('p');
+    st.style.cssText = 'font-size:.72rem;color:#888;';
+    st.textContent = 'Waiting...';
+    stats.push(st);
+    info.appendChild(lbl); info.appendChild(st);
+    var dot = document.createElement('div');
+    dot.className = 'dot';
+    dots.push(dot);
+    row.appendChild(img); row.appendChild(info); row.appendChild(dot);
+    rowlistEl.appendChild(row);
+  });
+
+  var total = queue.length;
+  var successCount = 0;
+  var uploadedPaths = {}; // filename -> github path
+
+  for(var i = 0; i < total; i++){
+    var item = queue[i];
+    dots[i].className = 'dot busy';
+    stats[i].textContent = 'Uploading...';
+    document.getElementById('progtext').textContent = 'Uploading '+(i+1)+' of '+total+'...';
+    document.getElementById('pfill').style.width = Math.round((i/total)*100)+'%';
+
+    var path = 'photos/'+item.filename;
+    try {
+      var sha = await getSHA(token, user, repo, path);
+      await ghPut(token, user, repo, path, item.b64, 'Add photo: '+item.filename, sha);
+      dots[i].className = 'dot ok';
+      stats[i].textContent = '✓ Done!';
+      successCount++;
+      uploadedPaths[item.filename] = path;
+    } catch(err){
+      dots[i].className = 'dot err';
+      stats[i].textContent = '✗ ' + err.message;
+    }
+  }
+
+  document.getElementById('pfill').style.width = '100%';
+  document.getElementById('progtext').textContent = 'Finishing up...';
+
+  // Update index.html on GitHub to reference photos
+  if(successCount > 0){
+    try {
+      await updateSiteHtml(token, user, repo, uploadedPaths);
+    } catch(e){
+      console.warn('index.html update failed:', e);
+    }
+  }
+
+  // Show done screen
+  document.getElementById('s2').style.display = 'none';
+  document.getElementById('s3').style.display = 'block';
+  var siteUrl = 'https://'+user+'.github.io/'+repo+'/';
+  document.getElementById('sitelink').href = siteUrl;
+
+  if(successCount === total){
+    document.getElementById('doneicon').textContent = '🎉';
+    document.getElementById('donetitle').textContent = 'All Done!';
+    document.getElementById('donemsg').textContent = successCount+' photos uploaded! Give GitHub ~1 min to refresh.';
+  } else {
+    document.getElementById('doneicon').textContent = '⚠️';
+    document.getElementById('donetitle').style.color = '#fbbf24';
+    document.getElementById('donetitle').textContent = successCount+'/'+total+' Uploaded';
+    document.getElementById('donemsg').textContent = 'Some photos failed. Check your token permissions and try again.';
+  }
+}
+
+// Rewrite index.html on GitHub so photos load from /photos/ folder
+async function updateSiteHtml(token, user, repo, uploadedPaths){
+  // Fetch current index.html
+  var r = await fetch('https://api.github.com/repos/'+user+'/'+repo+'/contents/index.html',{
+    headers:{ 'Authorization':'token '+token, 'Accept':'application/vnd.github+json' }
+  });
+  if(!r.ok) throw new Error('Could not fetch index.html');
+  var data = await r.json();
+  var sha = data.sha;
+
+  // Decode HTML safely
+  var htmlBytes = Uint8Array.from(atob(data.content.replace(/\n/g,'')), function(c){ return c.charCodeAt(0); });
+  var html = new TextDecoder('utf-8').decode(htmlBytes);
+
+  // Build restore script mapping filenames to slots
+  var galleryMap = {}, timelineMap = {}, memoryMap = {};
+  queue.forEach(function(item){
+    if(!uploadedPaths[item.filename]) return;
+    var url = 'photos/'+item.filename;
+    if(item.filename.startsWith('gallery_')){
+      var idx = parseInt(item.filename.split('_')[1]);
+      galleryMap[idx] = url;
+    } else if(item.filename.startsWith('timeline_')){
+      var idx = parseInt(item.filename.split('_')[1]);
+      timelineMap[idx] = url;
+    } else if(item.filename.startsWith('memory_')){
+      var idx = parseInt(item.filename.split('_')[1]);
+      memoryMap[idx] = url;
+    }
+  });
+
+  var injectScript = '<script id="photo-restore">'
+    + '(function(){'
+    + 'var G='+JSON.stringify(galleryMap)+';'
+    + 'var T='+JSON.stringify(timelineMap)+';'
+    + 'var M='+JSON.stringify(memoryMap)+';'
+    + 'var tlAsps=["4/3","1/1"];'
+    + 'function fill(id,src,style){var e=document.getElementById(id);if(e){e.innerHTML="<img src=\'"+src+"\' style=\'"+style+"\'/>"; }}'
+    + 'window.addEventListener("DOMContentLoaded",function(){'
+    + '  Object.keys(G).forEach(function(i){fill("gb"+i,G[i],"width:100%;height:100%;object-fit:cover;");});'
+    + '  Object.keys(T).forEach(function(i){var e=document.getElementById("tb"+i);if(e){e.outerHTML="<img src=\'"+T[i]+"\' style=\'width:100%;border-radius:10px;margin-top:4px;display:block;aspect-ratio:"+tlAsps[i]+";object-fit:cover;\'/>";}});'
+    + '  Object.keys(M).forEach(function(i){fill("mb"+i,M[i],"width:100%;height:100%;object-fit:cover;");});'
+    + '});'
+    + '})();'
+    + '<\/script>';
+
+  // Remove any previous inject
+  html = html.replace(/<script id="photo-restore">[\s\S]*?<\/script>/g, '');
+  // Inject before </head>
+  html = html.replace('</head>', injectScript + '</head>');
+
+  // Encode back to base64 safely (handles unicode)
+  var encoded = btoa(String.fromCharCode.apply(null, new TextEncoder().encode(html)));
+
+  await ghPut(token, user, repo, 'index.html', encoded, 'Update site with photos', sha);
+}
+</script>
+</body>
+</html>
